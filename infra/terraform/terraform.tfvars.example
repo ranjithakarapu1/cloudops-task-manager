@@ -1,0 +1,7 @@
+aws_region   = "ap-south-1"
+project_name = "cloudops-lab"
+vpc_cidr     = "10.20.0.0/16"
+app_repo_url = "https://github.com/YOUR-USERNAME/cloudops-task-manager.git"
+db_name      = "tasks"
+db_username  = "taskadmin"
+db_password  = "REPLACE_WITH_A_LONG_RANDOM_LAB_PASSWORD"

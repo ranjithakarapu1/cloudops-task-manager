@@ -1,0 +1,30 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql+pymysql://taskuser:taskpass@mysql:3306/tasks
+      UPLOAD_DIR: /mnt/shared/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - uploads:/mnt/shared/uploads
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: tasks
+      MYSQL_USER: taskuser
+      MYSQL_PASSWORD: taskpass
+      MYSQL_ROOT_PASSWORD: localrootpass
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ptaskpass"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
+  uploads:
